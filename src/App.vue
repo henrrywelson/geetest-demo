@@ -1,28 +1,61 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <form id="form">
+      <div
+        class="inp"
+        :class="captchaConfig.config.product === 'bind' ? 'minWidth' : ''"
+      >
+        <div class="user">user</div>
+        <input
+          type="email"
+          id="email"
+          autocomplete="false"
+          placeholder="hello@geetest.com"
+        />
+      </div>
+      <div class="inp">
+        <div class="pass"></div>
+        <input
+          type="password"
+          id="pass"
+          autocomplete="false"
+          placeholder="******"
+        />
+      </div>
+      <div
+        id="captcha"
+        :class="captchaConfig.config.product === 'bind' ? 'hideHeight' : ''"
+      >
+        <GeeTest :captcha-config="captchaConfig" />
+      </div>
+      <div class="login" @click="login">
+        {{ captchaConfig.config.language === "en" ? "login" : "登录" }}
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import GeeTest from "./components/GeeTest.vue";
 
 export default {
   name: "App",
-  components: {
-    HelloWorld,
+  components: { GeeTest },
+  data() {
+    return {
+      captchaConfig: {
+        config: {
+          captchaId: "097333cc0dff02bff190d16cb1a99aaf",
+          language: "en",
+          product: "bind",
+        },
+        handler: this.captchaHandler(),
+      },
+    };
+  },
+  methods: {
+    captchaHandler() {},
+    login() {},
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
